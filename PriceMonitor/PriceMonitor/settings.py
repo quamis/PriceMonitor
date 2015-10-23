@@ -1,3 +1,6 @@
+import os
+ENV = os.environ
+
 # Scrapy settings for ExchangeRate project
 #
 # For simplicity, this file contains only the most important settings by
@@ -26,6 +29,6 @@ ITEM_PIPELINES = {
 
 
 DB_HOST = 'localhost'
-DB_NAME = 'pricemonitor'
-DB_USER = 'exchangerate'
-DB_PASS = 'BrounluchOew9uPhl56o'
+DB_NAME = ENV['PRICEMONITOR_DB_DATABASE']
+DB_USER = ENV['PRICEMONITOR_DB_USER']
+DB_PASS = ENV['PRICEMONITOR_DB_PASS']
