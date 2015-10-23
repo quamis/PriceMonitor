@@ -1,0 +1,119 @@
+/*
+@see http://paletton.com/#uid=3000u0kkTmv5r++gJSqlldell6q
+desaturted: http://paletton.com/#uid=3000u0k84mq00++4RYH6vcv5+36
+bg colors: 	http://paletton.com/#uid=3000u0k0rU75rGk3aMR1oEN23w2
+*/
+
+body{
+	font-family: Verdana;
+}
+
+table.products {
+	border: 1px solid #eee;
+	width: 100%;
+	border-collapse: collapse;
+	color: #666;
+}
+table.products >tbody:nth-child(2n+0) >tr >td {
+	background-color: #FFFCFC;
+}
+table.products >tbody:nth-child(2n+1) >tr >td {
+	background-color: #FAFBF8;
+}
+
+table.products >tbody >tr >td{
+	white-space: nowrap;
+	border-bottom: 1px solid #eee;
+	padding: 0.25em;
+	vertical-align: top;
+}
+
+table.products >tbody >tr >td.name{
+	text-align: left;
+	color: 666;
+}
+table.products >tbody >tr >td.price{
+	width: 1%;
+	text-align: right;
+	font-weight: bold;
+}
+table.products >tbody >tr >td.priceDetails{
+	width: 1%;
+	text-align: right;
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+table.products >tbody >tr >td.price >span.value{
+	color: #800;
+}
+table.products >tbody >tr >td.price >span.currency{
+	color: #ccc;
+}
+table.products >tbody >tr.history >td.price >span.value{
+	color: #844;
+}
+table.products >tbody >tr.history >td.price >span.currency{
+	color: #f0f0f0;
+}
+
+table.products >tbody >tr.current >td {
+	border-top: 4px solid #eee;
+}
+table.products >tbody >tr.history >td {
+	opacity: 0.33;
+}
+
+
+/* price coloring */
+table.products >tbody >tr.current.price-lower >td.price >span.value{	/* green */
+	/* @see http://meyerweb.com/eric/tools/color-blend/#4C6221:83A73A:7:hex */
+	color: #83A73A;	
+}
+table.products >tbody >tr.current.price-lower.diff-500 >td.price >span.value{ color: #83A73A; }
+table.products >tbody >tr.current.price-lower.diff-200 >td.price >span.value{ color: #7C9E37; }
+table.products >tbody >tr.current.price-lower.diff-150 >td.price >span.value{ color: #759634; }
+table.products >tbody >tr.current.price-lower.diff-100 >td.price >span.value{ color: #6E8D31; }
+table.products >tbody >tr.current.price-lower.diff-050 >td.price >span.value{ color: #68852E; }
+table.products >tbody >tr.current.price-lower.diff-020 >td.price >span.value{ color: #617C2A; }
+table.products >tbody >tr.current.price-lower.diff-010 >td.price >span.value{ color: #5A7327; }
+table.products >tbody >tr.current.price-lower.diff-005 >td.price >span.value{ color: #536B24; }
+table.products >tbody >tr.current.price-lower.diff-001 >td.price >span.value{ color: #4C6221; }
+
+
+table.products >tbody >tr.current.price-higher >td.price>span.value{	/* red */
+	/* @see http://meyerweb.com/eric/tools/color-blend/#692323:B33E3E:7:hex */
+	color: #692323;	
+}
+table.products >tbody >tr.current.price-higher.diff-500 >td.price >span.value{ color: #B33E3E; }
+table.products >tbody >tr.current.price-higher.diff-200 >td.price >span.value{ color: #AA3B3B; }
+table.products >tbody >tr.current.price-higher.diff-150 >td.price >span.value{ color: #A13737; }
+table.products >tbody >tr.current.price-higher.diff-100 >td.price >span.value{ color: #973434; }
+table.products >tbody >tr.current.price-higher.diff-050 >td.price >span.value{ color: #8E3131; }
+table.products >tbody >tr.current.price-higher.diff-020 >td.price >span.value{ color: #852D2D; }
+table.products >tbody >tr.current.price-higher.diff-010 >td.price >span.value{ color: #7C2A2A; }
+table.products >tbody >tr.current.price-higher.diff-005 >td.price >span.value{ color: #722626; }
+table.products >tbody >tr.current.price-higher.diff-001 >td.price >span.value{ color: #692323; }
+
+
+table.products >tbody >tr.history .price-lower>td.price >span.value{
+	color: #555C47;	/* desaturated green */
+}
+table.products >tbody >tr.history.price-higher >td.price>span.value{
+	color: #634C4C;/* desaturated red */
+}
+
+table.products >tbody >tr >td.addTime{
+	width: 1%;
+	color: #ccc;
+	padding: 0 1em 0 1em;
+	text-align: right;
+}
+table.products >tbody >tr >td.lastSeen{
+	width: 1%;
+	color: #ccc;
+	padding: 0 1em 0 1em;
+	text-align: right;
+}
+table.products >tbody >tr >td.URL{
+	width: 1%;
+}
