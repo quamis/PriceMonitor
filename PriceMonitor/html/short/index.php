@@ -3,6 +3,9 @@ ini_set('display_errors', '1');
 error_reporting(-1);
 date_default_timezone_set('UTC');
 
+define('TIMESTAMP', microtime(true));
+require_once("db.cfg.php");
+
 
 class DB {
 	static $instance = null;
@@ -19,12 +22,8 @@ class DB {
 	protected $db = null;
 	
 	public function connect() {
-		$dsn = 'mysql:dbname=pricemonitor;host=localhost;charset=UTF8';
-		$user = 'exchangerate';
-		$password = 'BrounluchOew9uPhl56o';
-
 		try {
-			$this->db = new PDO($dsn, $user, $password);
+			$this->db = new PDO(DB_DSN, DB_USER, DB_PASS);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} 
 		catch (PDOException $e) {
@@ -73,38 +72,70 @@ class Products {
 class Product {
 	protected $id = null;
 	protected $spider = null;
-	protected $data = Array();
+	protected $data = null;
+	
+	protected $date_tz = null;
 	
 	public function __construct($id, $spider)
 	{
 		$this->id = $id;
 		$this->spider = $spider;
+		
+		$this->date_tz  = new DateTimeZone('Europe/Bucharest');
 	}
 	
 	function getHistory() {
 		$history = DB::getInstance()->getAssoc("SELECT * FROM `products` WHERE `id`='{$this->id}' AND `spider`='{$this->spider}' ORDER BY `lastSeen` DESC");
 		foreach($history as $k=>$hist) {
-			$hist['addTime_str'] = $this->formatDate($hist['addTime']);
-			$hist['lastSeen_str'] = $this->formatDate($hist['lastSeen']);
+			$hist['addTime_obj'] = $this->createDate($hist['addTime']);
+			$hist['lastSeen_obj'] = $this->createDate($hist['lastSeen']);
+		
+			$hist['isAvailable'] = $this->isAvailable() || ($this->getAge($hist['lastSeen_obj'])<(60*60*24));
+			
+			$hist['addTime_str'] = $hist['addTime_obj']->format("Y-m-d H:i:s");
+			$hist['lastSeen_str'] = $hist['lastSeen_obj']->format("Y-m-d H:i:s");
+			
 			$history[$k] = $hist;
 		}
 		return $history;
 	}
 	
+	function isAvailable()
+	{
+		return $this->getData()['isAvailable'];
+	}
+	
 	function getData() {
+		if ($this->data!==null) {
+			return $this->data;
+		}
 		$this->data = DB::getInstance()->getRow("SELECT * FROM `products` WHERE `id`='{$this->id}' AND `spider`='{$this->spider}'ORDER BY `lastSeen` DESC LIMIT 1");
-		$this->data['addTime_str'] = $this->formatDate($this->data['addTime']);
-		$this->data['lastSeen_str'] = $this->formatDate($this->data['lastSeen']);
+		
+		$this->data['addTime_obj'] = $this->createDate($this->data['addTime']);
+		$this->data['lastSeen_obj'] = $this->createDate($this->data['lastSeen']);
+		
+		$this->data['isAvailable'] = ($this->getAge($this->data['lastSeen_obj'])<(60*60*24));
+		
+		$this->data['addTime_str'] = $this->data['addTime_obj']->format("Y-m-d H:i:s");
+		$this->data['lastSeen_str'] = $this->data['addTime_obj']->format("Y-m-d H:i:s");
+		
 		return $this->data;
 	}
 	
-	protected function formatDate($date) {
-		$dtObj = DateTime::createFromFormat("Y-m-d H:i:s", $date, new DateTimeZone('UTC'));
-		$dtObj->setTimeZone(new DateTimeZone('Europe/Bucharest'));
-		return $dtObj->format("Y-m-d H:i:s");
+	protected function createDate($dateStr) {
+		$dtObj = DateTime::createFromFormat("Y-m-d H:i:s", $dateStr, new DateTimeZone('UTC'));
+		$dtObj->setTimeZone($this->date_tz);
+		
+		return $dtObj;
 	}
-	
+
+	public function getAge($date)
+	{
+		return (TIMESTAMP - $date->getTimestamp());
+	}
 }
+
+
 /*
 $products = new Products();
 foreach ($products->getAvailable() as $rawProd) {
@@ -189,6 +220,9 @@ foreach ($products->getAvailable() as $rawProd) {
 							}
 						}
 					}
+					
+					$trClass[] = ($data['isAvailable']?'available':'unavailable');
+					
 			?>
 				<tbody>
 					<tr class="current <?=implode(" ", $trClass)?>">
@@ -230,6 +264,8 @@ foreach ($products->getAvailable() as $rawProd) {
 								}
 							}
 							
+							$trClass[] = ($hist['isAvailable']?'available':'unavailable');
+							
 							?>
 							<tr class="history <?=implode(" ", $trClass)?>">
 								<td class="price"><span class='value'><?=number_format($hist['price'], 2)?></span> <span class='currency'><?=$hist['currency']?><span></td>
@@ -255,8 +291,8 @@ foreach ($products->getAvailable() as $rawProd) {
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
-	-->
 	
 	<script type="text/javascript" src= "lib/index.js"></script>
+	-->
 </body>
 </html>

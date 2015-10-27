@@ -25,6 +25,8 @@ scrapy_crawl "$TIME" "pcgarage.ro" &
 scrapy_crawl "$TIME" "mediagalaxy.ro" &
 scrapy_crawl "$TIME" "flanco.ro" &
 scrapy_crawl "$TIME" "coradrive.ro" &
+scrapy_crawl "$TIME" "azerty.ro" &
+scrapy_crawl "$TIME" "cel.ro" &
 
 clear
 for job in `jobs -p`; do

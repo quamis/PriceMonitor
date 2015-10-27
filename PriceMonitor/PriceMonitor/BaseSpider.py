@@ -12,6 +12,7 @@ class BaseSpider(BaseSpider):
         self.cursor = self.conn.cursor()
         
         self.cursor.execute("""SELECT `URL` FROM `urls` WHERE `spider`=%s ORDER BY RAND() ASC""", (self.name,))
+        #self.cursor.execute("""SELECT `URL` FROM `urls` WHERE `spider`=%s AND `URL` LIKE '%%patriot%%' ORDER BY RAND() ASC""", (self.name,))
         rows = self.cursor.fetchall()
         for [url] in rows:
             yield scrapy.http.Request(url, self.parse)

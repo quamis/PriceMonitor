@@ -11,6 +11,10 @@ class emag_roSpider(BaseSpider):
         product = ProductDetails()
         
         # .//*[@id='offer-price-stock']/div[contains(@class,'prices')]
+        
+        if hxs.xpath("//*[@id='offer-price-stock-add']/span/text()").extract():
+            return None
+        
         product['id'] = self.get_id(response)
         product['URL'] = response.url
         product['price'] = float(hxs.xpath("//*[@id='offer-price-stock']/div[contains(@class,'prices')]/span[@itemprop='price']/@content").extract()[0])

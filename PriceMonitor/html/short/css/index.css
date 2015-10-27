@@ -63,6 +63,10 @@ table.products >tbody >tr.history >td {
 	opacity: 0.33;
 }
 
+/* unavailable */
+table.products >tbody >tr.unavailable >td {
+	text-decoration: line-through;
+}
 
 /* price coloring */
 table.products >tbody >tr.current.price-lower >td.price >span.value{	/* green */
