@@ -11,6 +11,11 @@ class flanco_roSpider(BaseSpider):
         hxs = Selector(response)
         product = ProductDetails()
         
+        if hxs.xpath(".//p[contains(@class, 'out-of-stock')]/span/text()").extract():
+            return None
+        if not hxs.xpath("//h1[@class='product-name']/text()").extract():
+            return None
+            
         product['id'] = self.get_id(response)
         product['URL'] = response.url
         
@@ -21,7 +26,9 @@ class flanco_roSpider(BaseSpider):
         product['price'] = float(re.sub("[^0-9\.]", "", re.sub("\,", ".", re.sub("\.", "", txt))))
         product['currency'] = 'RON'
         product['name'] = hxs.xpath("//h1[@class='product-name']/text()").extract()[0].strip()
-        product['details'] = hxs.xpath("//h1[@class='product-name']/text()").extract()[0].strip()
+        product['description'] = ''
+        product['attributes'] =     self.determineAttributes(product['name'])
+        product['extractedData'] = {}
         
         return [product]
     

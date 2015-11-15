@@ -19,7 +19,9 @@ class coradrive_roSpider(BaseSpider):
         product['price'] = float(re.sub("[^0-9\.]", "", re.sub(",", ".", re.sub("\.", "", txt))))
         product['currency'] = 'RON'
         product['name'] = hxs.xpath(".//h1/text()").extract()[0]
-        product['details'] = hxs.xpath(".//h1/text()").extract()[0]
+        product['description'] = ''
+        product['attributes'] =     self.determineAttributes(product['name'])
+        product['extractedData'] = {}
         
         return [product]
         

@@ -18,7 +18,9 @@ class cel_roSpider(BaseSpider):
         product['price'] = float(txt)
         product['currency'] = 'RON'
         product['name'] = hxs.xpath("//h2[@itemprop='name']/text()").extract()[0]
-        product['details'] = hxs.xpath("//h2[@itemprop='name']/text()").extract()[0]
+        product['description'] = ''
+        product['attributes'] =     self.determineAttributes(product['name'])
+        product['extractedData'] = {}
         
         return [product]
     

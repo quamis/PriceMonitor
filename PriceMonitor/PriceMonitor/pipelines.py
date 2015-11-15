@@ -15,7 +15,8 @@ class PriceMonitorPipeline(object):
         return item
 
 import MySQLdb
-from datetime import datetime
+import json
+from datetime import datetime, timedelta
 # @see https://github.com/rolando/dirbot-mysql/blob/master/dirbot/pipelines.py
 # @see http://stackoverflow.com/a/22853435/11301
 class StoragePipeline(object):
@@ -37,49 +38,100 @@ class StoragePipeline(object):
             item_is_new = False
         
         if item_is_new:
-            self.cursor.execute("""INSERT INTO `products` (`id`, `URL`, `name`, `price`, `currency`, `details`, `addTime`, `lastSeen`, `spider`, `run_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
+            self.cursor.execute("""INSERT INTO `quamis_pricemonitor_product_logs` (`id`, `run_id`, `name`, `price`, `currency`, `description`, `extractedData`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
                 (
                     item['id'].encode('utf-8'), 
-                    item['URL'].encode('utf-8'),
+                    self.run_id.encode('utf-8'),
                     item['name'].encode('utf-8'),
                     item['price'],
                     item['currency'].encode('utf-8'),
-                    item['details'].encode('utf-8'),
+                    item['description'].encode('utf-8'),
+                    json.dumps(item['extractedData'], ensure_ascii=False).encode('utf-8'),
                     now.encode('utf-8'),
                     now.encode('utf-8'),
-                    spider.name,
-                    self.run_id.encode('utf-8'),
                 )
             )
+            
+            for (key, value) in item['attributes'].items():
+                if value is not None:
+                    self.cursor.execute("""REPLACE INTO `quamis_pricemonitor_product_attributes` (`id`, `key`, `value`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s)""", 
+                        (
+                            ("%s.%s"%(item['id'], key)).encode('utf-8'), 
+                            key.encode('utf-8'),
+                            value.encode('utf-8'),
+                            now.encode('utf-8'),
+                            now.encode('utf-8'),
+                        )
+                    )
+                
             spider.log("INSERT: [%s] %s" % (item['id'], item['URL']))
             
         else:
-            self.cursor.execute("""UPDATE `products` SET `lastSeen`=%s, `run_id`=%s WHERE `id`=%s AND spider=%s AND `price`=%s AND `currency`=%s AND `addTime`=%s""", 
+            self.cursor.execute("""UPDATE `quamis_pricemonitor_product_logs` SET `updated_at`=%s, `run_id`=%s WHERE `id`=%s AND `price`=%s AND `currency`=%s AND `created_at`=%s""", 
                 (
                     now.encode('utf-8'),
                     self.run_id.encode('utf-8'),
                     item['id'].encode('utf-8'), 
-                    spider.name,
                     item['price'],
                     item['currency'].encode('utf-8'),                     
-                    last_item['addTime'].isoformat(' ').encode('utf-8'),
+                    last_item['created_at'].isoformat(' ').encode('utf-8'),
                 )
             )
+            
             spider.log("UPDATE: [%s] %s" % (item['id'], item['URL']))
-
+        
+        if spider.getArg('update_missing_attributes'):
+            for (key, value) in item['attributes'].items():
+                #if value is None:
+                #    self.cursor.execute("""DELETE FROM `quamis_pricemonitor_product_attributes` WHERE `id`=%s AND `key`=%s""", 
+                #        (
+                #            ("%s.%s"%(item['id'], key)).encode('utf-8'), 
+                #            key.encode('utf-8'),
+                #        )
+                #    )
+                #else:
+                if value is not None:
+                    self.cursor.execute("""REPLACE INTO `quamis_pricemonitor_product_attributes` (`id`, `key`, `value`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s)""", 
+                        (
+                            ("%s.%s"%(item['id'], key)).encode('utf-8'), 
+                            key.encode('utf-8'),
+                            value.encode('utf-8'),
+                            now.encode('utf-8'),
+                            now.encode('utf-8'),
+                        )
+                    )
+        
         self.conn.commit()
         return item
         
     def item_last_values(self, item, spider):
-        self.cursor.execute("""SELECT `id`, `URL`, `name`, `price`, `currency`, `details`, `addTime`, `lastSeen`, `spider` FROM `products` WHERE `id`=%s AND `spider`=%s ORDER BY `lastSeen` DESC LIMIT 1""", 
+        self.cursor.execute("""SELECT `id`, `run_id`, `name`, `price`, `currency`, `description`, `extractedData`, `created_at`, `updated_at` FROM `quamis_pricemonitor_product_logs` WHERE `id`=%s ORDER BY `updated_at` DESC LIMIT 1""", 
             (
                 item['id'].encode('utf-8'), 
-                spider.name,
             )
         )
         row = self.cursor.fetchone()
         if not row:
             return False
-        columns = ("id", "URL", "name", "price", "currency", "details", "addTime", "lastSeen", "spider")
+
+        columns = ("id", "run_id", "name", "price", "currency", "description", "extractedData", "created_at", "updated_at",)
         return dict(zip(columns, row))
     
+    def close_spider(self, spider):
+        maxDate = (datetime.utcnow() - timedelta(days=5)).replace(microsecond=0).isoformat(' ')
+        self.cursor.execute("""
+            UPDATE `quamis_pricemonitor_product` 
+                SET `active`=0 
+            WHERE
+                `spider`=%s
+                AND `active`
+                AND `id` IN (SELECT DISTINCT `id` FROM `quamis_pricemonitor_product_logs`)
+                AND `id` NOT IN (SELECT DISTINCT `id` FROM `quamis_pricemonitor_product_logs` WHERE `updated_at`>%s)
+            """, 
+            (
+                (spider.name).encode('utf-8'),
+                maxDate,
+            )
+        )
+        
+        self.conn.commit()

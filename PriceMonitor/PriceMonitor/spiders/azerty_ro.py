@@ -18,7 +18,9 @@ class azerty_roSpider(BaseSpider):
         product['price'] = float(re.sub("[^0-9\.]", "", re.sub(",", ".", re.sub("\.", "", txt))))
         product['currency'] = 'RON'
         product['name'] = hxs.xpath(".//*[@id='productdetails']//p[@class='title']/text()").extract()[0]
-        product['details'] = hxs.xpath(".//*[@id='productdetails']//p[@class='title']/text()").extract()[0]
+        product['description'] = ''
+        product['attributes'] =     self.determineAttributes(product['name'])
+        product['extractedData'] = {}
         
         return [product]
     

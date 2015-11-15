@@ -43,11 +43,16 @@ table.products >tbody >tr >td.priceDetails{
 	font-size: 0.8em;
 	vertical-align: middle;
 }
-table.products >tbody >tr >td.price >span.value{
+table.products >tbody >tr >td.price >div >span.value{
 	color: #800;
 }
-table.products >tbody >tr >td.price >span.currency{
+table.products >tbody >tr >td.price >div >span.currency{
 	color: #ccc;
+}
+/* unitPrice */
+table.products >tbody >tr >td.price >div.unitPrice {
+	font-size: 0.5em;
+	font-weight: normal;
 }
 table.products >tbody >tr.history >td.price >span.value{
 	color: #844;
@@ -66,6 +71,24 @@ table.products >tbody >tr.history >td {
 /* unavailable */
 table.products >tbody >tr.unavailable >td {
 	text-decoration: line-through;
+}
+
+/* tags */
+table.products >tbody >tr >td.name >div.tags{
+	float:right;
+}
+table.products >tbody >tr >td.name div.tags >span{
+	border: 1px solid #ccc;
+	color: #ccc;
+}
+table.products >tbody >tr >td.name div.tags >span.tag-hdd_ssd{
+	color: #c00;
+}
+table.products >tbody >tr >td.name div.tags >span.tag-tv{
+	color: #f80;
+}
+table.products >tbody >tr >td.name div.tags >span.tag-baby_pampers{
+	color: #08f;
 }
 
 /* price coloring */

@@ -13,4 +13,6 @@ class ProductDetails(Item):
     name = Field()
     price = Field()
     currency = Field()
-    details = Field()
+    description = Field()
+    extractedData = Field()
+    attributes = Field()

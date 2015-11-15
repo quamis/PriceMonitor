@@ -12,14 +12,14 @@ ENV = os.environ
 BOT_NAME = 'PriceMonitor'
 CONCURRENT_REQUESTS = 2
 CONCURRENT_REQUESTS_PER_DOMAIN = 2
-DOWNLOAD_DELAY = 15
+DOWNLOAD_DELAY = 10
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 SPIDER_MODULES = ['PriceMonitor.spiders']
 NEWSPIDER_MODULE = 'PriceMonitor.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'PriceMonitor v0.1'
+USER_AGENT = 'PriceMonitor v0.2'
 #USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0"
 
 ITEM_PIPELINES = {
@@ -27,6 +27,9 @@ ITEM_PIPELINES = {
     'PriceMonitor.pipelines.StoragePipeline': 900,
 }
 
+#DOWNLOADER_MIDDLEWARES = {
+#    'PriceMonitor.middlewares.RedirectTracking': 900
+#}
 
 DB_HOST = 'localhost'
 DB_NAME = ENV['PRICEMONITOR_DB_DATABASE']

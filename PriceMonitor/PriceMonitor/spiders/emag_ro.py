@@ -20,7 +20,9 @@ class emag_roSpider(BaseSpider):
         product['price'] = float(hxs.xpath("//*[@id='offer-price-stock']/div[contains(@class,'prices')]/span[@itemprop='price']/@content").extract()[0])
         product['currency'] = 'RON'
         product['name'] = hxs.xpath("//*[@id='offer-title']/h1/text()").extract()[0]
-        product['details'] = hxs.xpath("//*[@id='offer-title']/h1/text()").extract()[0]
+        product['description'] = ''
+        product['attributes'] =     self.determineAttributes(product['name'])
+        product['extractedData'] = {}
         
         return [product]
     

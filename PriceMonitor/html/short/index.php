@@ -51,11 +51,16 @@ class DB {
 		$result = $this->db->query($query, PDO::FETCH_ASSOC)->fetch();
 		return reset($result);
 	}
+	
+	public function getCol($query) {
+		$result = $this->db->query($query)->fetchAll(PDO::FETCH_COLUMN);
+		return $result;
+	}
 }
 
 class Products {
 	public function getAll() {
-		$results = DB::getInstance()->getAssoc("SELECT `id` FROM products GROUP BY `id` ORDER BY `name` ASC");
+		$results = DB::getInstance()->getAssoc("SELECT `id` FROM `products` GROUP BY `id` ORDER BY `name` ASC");
 		return $results;
 	}
 	public function getLastRunTime() {
@@ -64,7 +69,7 @@ class Products {
 		return $lastRunTime;
 	}
 	public function getAvailable() {
-		$results = DB::getInstance()->getAssoc("SELECT `id`, `spider` FROM products WHERE `lastSeen`>='{$this->getLastRunTime()}' GROUP BY `id` ORDER BY `name` ASC");
+		$results = DB::getInstance()->getAssoc("SELECT `id`, `spider` FROM `products` WHERE `lastSeen`>='{$this->getLastRunTime()}' GROUP BY `id` ORDER BY `name` ASC");
 		return $results;
 	}
 }
@@ -73,6 +78,7 @@ class Product {
 	protected $id = null;
 	protected $spider = null;
 	protected $data = null;
+	protected $tags = null;
 	
 	protected $date_tz = null;
 	
@@ -102,7 +108,7 @@ class Product {
 	
 	function isAvailable()
 	{
-		return $this->getData()['isAvailable'];
+		return (bool)$this->getData()['isAvailable'];
 	}
 	
 	function getData() {
@@ -119,7 +125,45 @@ class Product {
 		$this->data['addTime_str'] = $this->data['addTime_obj']->format("Y-m-d H:i:s");
 		$this->data['lastSeen_str'] = $this->data['addTime_obj']->format("Y-m-d H:i:s");
 		
+		$this->data['tags'] = $this->getTags();
+		$this->data['tagsData'] = $this->extractTagsData($this->data['tags']);
+		
+		$this->data['tagsData']['unitPrice'] = null;
+		if ($this->data['tagsData']['quantity']) {
+			$this->data['tagsData']['unitPrice'] = $this->data['price']/$this->data['tagsData']['quantity'];
+		}
+		
 		return $this->data;
+	}
+	
+	function getTags()
+	{
+		if ($this->tags!==null) {
+			return $this->tags;
+		}
+		$this->tags = (array)DB::getInstance()->getCol("SELECT `tag` FROM `tags` WHERE `URL`='{$this->getData()['URL']}' AND `spider`='{$this->spider}' ORDER BY `tag` ASC");
+		
+		return $this->tags;
+	}
+	
+	function extractTagsData($tags)
+	{
+		$ret = Array(
+			'product' => '',
+			'quantity' => 0,
+		);
+		foreach($tags as $tag) {
+			if (preg_match("/^prod:(?P<product>.+)/", $tag, $m)) {
+				$ret['product'] = $m['product'];
+			}
+			elseif (preg_match("/^q:(?P<quantity>[0-9]+)/", $tag, $m)) {
+				$ret['quantity'] = $m['quantity'];
+			}
+			else {
+				// var_dump($tag);
+			}
+		}
+		return $ret;
 	}
 	
 	protected function createDate($dateStr) {
@@ -184,7 +228,42 @@ foreach ($products->getAvailable() as $rawProd) {
 				);
 				
 				$products = new Products();
-				foreach ($products->getAvailable() as $rawProd) {
+				$availableProducts = $products->getAvailable();
+				usort($availableProducts, function($a, $b) {
+					$ret = 0;
+					
+					$ap = new Product($a['id'], $a['spider']);
+					$bp = new Product($b['id'], $b['spider']);
+					
+					$atd = $ap->getData()['tagsData'];
+					$btd = $bp->getData()['tagsData'];
+					
+					if (!$ret) {
+						#$ret = strcmp(implode(", ", $ap->getData()['tags']), implode(", ", $bp->getData()['tags']));
+						$as = sprintf("%-32s.%06d", $atd['product'], $atd['quantity']);
+						$bs = sprintf("%-32s.%06d", $btd['product'], $btd['quantity']);
+						$ret = strcmp($as, $bs);
+					}
+					if(!$ret) {
+						$ret = -1*($ap->isAvailable() - $bp->isAvailable());
+					}
+					
+					if(!$ret && $atd['unitPrice'] && $btd['unitPrice']) {
+						$ret = 1*(int)1000*($atd['unitPrice'] - $btd['unitPrice']);
+					}
+					
+					if(!$ret) {
+						$ret = (int)($ap->getData()['price'] - $bp->getData()['price']);
+					}
+					
+					if(!$ret) {
+						$ret = strcmp($ap->getData()['name'], $bp->getData()['name']);
+					}
+					
+					return $ret;
+				});
+
+				foreach ($availableProducts as $rawProd) {
 					$prod = new Product($rawProd['id'], $rawProd['spider']);
 					$data = $prod->getData();
 					
@@ -223,11 +302,34 @@ foreach ($products->getAvailable() as $rawProd) {
 					
 					$trClass[] = ($data['isAvailable']?'available':'unavailable');
 					
+					$tagsClass = Array();
+					$tagsHtml = Array();
+					/*
+					foreach ($data['tags'] as $tag) {
+						$cls = preg_replace("/[^a-zA-Z0-9_-]/", "_", $tag);
+						$tagsClass[] = "tag-{$cls}";
+						$tagsHtml[] = sprintf("<span class='tag-%s'>%s</span>", $cls, $tag);
+					}
+					*/
+					$tag = 'product';
+					$tagsHtml[] = sprintf("<span class='tag-%s'>%s</span>", preg_replace("/[^a-zA-Z0-9_-]/", "_", $data['tagsData'][$tag]), $data['tagsData'][$tag]);
+					
+					$tag = 'quantity';
+					$tagsHtml[] = sprintf("<span>%s</span>", $data['tagsData'][$tag]);
+					
 			?>
 				<tbody>
 					<tr class="current <?=implode(" ", $trClass)?>">
-						<td class="name" rowspan="<?=count($history)+1?>"><?=$data['name']?></td>
-						<td class="price"><span class='value'><?=number_format($data['price'], 2)?></span> <span class='currency'><?=$data['currency']?><span></td>
+						<td class="name" rowspan="<?=count($history)+1?>">
+							<div class='tags <?=implode(" ", $tagsClass)?>'><?=implode("", $tagsHtml)?></div>
+							<div class='label'><?=$data['name']?></div>
+						</td>
+						<td class="price">
+							<div class='total'><span class='value'><?=number_format($data['price'], 2)?></span> <span class='currency'><?=$data['currency']?><span></div>
+							<?php if($data['tagsData'] && $data['tagsData']['unitPrice']) { ?>
+								<div class='unitPrice'><span class='value'><?=number_format($data['tagsData']['unitPrice'], 3)?></span> <span class='currency'><?=$data['currency']?><span> / unit</div>
+							<?php } ?>
+						</td>
 						<td class="priceDetails"><?php
 						if ($sign) {
 							printf("%s%s%%", ($sign>0?'+':'-'), number_format((1-$adiff)*100, 3));
