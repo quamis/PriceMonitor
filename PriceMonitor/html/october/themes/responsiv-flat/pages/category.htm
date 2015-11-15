@@ -1,0 +1,33 @@
+title = "Category"
+url = "/category/:category"
+layout = "default"
+description = "Category listing"
+is_hidden = 0
+child_of = "code-testing"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[breadcrumbs]
+main-ol-class = "breadcrumb"
+active-class = "active"
+disabled-class = "disabled"
+
+[ProductList]
+category = "slug:category"
+active = 1
+orderBy = "quantity,price"
+==
+{% component 'breadcrumbs' %}
+
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ this.param['category'] }}</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductList' %}
+        </div>
+    </div>
+</div>
+<br/>

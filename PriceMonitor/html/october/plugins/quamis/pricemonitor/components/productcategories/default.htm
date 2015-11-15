@@ -1,0 +1,11 @@
+{% for category in __SELF__.categories %}
+	<div class="row pricemonitor_category">
+		<a href="{{ ('/category/' ~ category.value ) |app }}"><div class="col-xl-12">{{ category.value }}</div></a>
+	</div>
+{% endfor %}
+<div class="row pricemonitor_category">
+	<a href="{{ '/category/:uncategorized'|app }}"><div class="col-xl-12">*uncategorized*</div></a>
+</div>
+<div class="row pricemonitor_category">
+	<a href="{{ '/category/:all'|app }}"><div class="col-xl-12">*all*</div></a>
+</div>

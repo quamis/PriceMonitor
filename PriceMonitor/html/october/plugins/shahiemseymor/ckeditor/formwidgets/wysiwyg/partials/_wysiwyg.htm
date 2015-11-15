@@ -1,0 +1,8 @@
+<div data-control="wysiwyg" 
+	 data-width="<?php echo $width; ?>"
+	 data-height="<?php echo $height; ?>"
+	 data-toolbar="<?php echo (trim($toolbar) == ''? 'Basic' : ucfirst($toolbar)); ?>"
+	 data-theme="<?php echo (trim($skin) == '' ? 'october' : $skin); ?>"
+	 data-lang="<?php echo (trim($language) == '' ? 'en' : $language); ?>">
+ 	<textarea name="<?php echo $name ?>" id="<?php echo $this->getId('textarea') ?>"><?= e($value) ?></textarea>
+</div>

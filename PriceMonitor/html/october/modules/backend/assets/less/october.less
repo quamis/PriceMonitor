@@ -1,0 +1,65 @@
+//
+// Z-Index frequencies:
+//
+// 0-200     - Base layer (content)
+// 200-400   - Base menus / dropdowns
+// 400-600   - Secondary layer (full screen)
+// 600-800   - Secondary menus / dropdowns
+// 800-1000  - Tertiary layer (popups)
+// 1000-1200 - Tertiary menus / dropdowns
+// 1200-9000 - Reserved for frequency manager
+//
+
+// Vendor
+@import "../vendor/sweet-alert/sweet-alert.less";
+@import "../vendor/jcrop/css/jquery.Jcrop.min.css";
+@import "../../../system/assets/vendor/prettify/prettify.css";
+@import "../../../system/assets/vendor/prettify/theme-desert.css";
+
+//
+// October Controls
+//
+
+@import "core/boot.less";
+@import "controls/alert.less";
+@import "controls/simplelist.less";
+@import "controls/scrollbar.less";
+@import "controls/filelist.less";
+@import "controls/common.less";
+@import "controls/reportwidgets.less";
+@import "controls/treelist.less";
+@import "controls/treeview.less";
+@import "controls/sidenav-tree.less";
+@import "controls/panels.less";
+@import "controls/selector-group.less";
+@import "controls/tree-path.less";
+@import "controls/namevaluelist.less";
+@import "controls/scrollpad.less";
+
+//
+// October Storm UI
+//
+
+@import "../../../system/assets/ui/less/global.less";
+
+//
+// Combines layout and vendor styles
+//
+
+// Core (shared elements)
+@import "core/fonts.less";
+@import "core/animations.less";
+
+// Boot variables and mixins
+@import "core/variables.less";
+@import "core/mixins.less";
+
+// Layout
+@import "layout/layout.less";
+@import "layout/mainmenu.less";
+@import "layout/sidenav.less";
+@import "layout/sidepanel.less";
+@import "layout/footer.less";
+@import "layout/outerlayout.less";
+@import "layout/fancylayout.less";
+@import "layout/flyout.less";

@@ -1,0 +1,5 @@
+1.0.1: 
+    - First version of PriceMonitor, with products, logs and attributes
+    - create_product_table.php
+    - create_product_logs_table.php
+    - create_product_attributes_table.php

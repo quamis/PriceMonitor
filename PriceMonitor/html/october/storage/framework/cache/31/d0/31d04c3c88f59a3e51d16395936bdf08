@@ -1,0 +1,144 @@
+1447568341s:7143:"a:6:{s:5:"mtime";i:1446230539;s:7:"content";s:3457:"title = "About"
+url = "/about"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+==
+<section id="layout-title">
+    <div class="container">
+        <h3>Despre TextArt</h3>
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-7">
+            <h4 class="headline"><span>Welcome</span></h4>
+            <p>There's a voice that keeps on calling me. Down the road, that's where I'll always be. Every stop I make, I make a new friend. Can't stay for long, just turn around and I'm gone again. Maybe tomorrow, I'll want to settle down, Until tomorrow, I'll just keep moving on.</p>
+            <p>He hasn't got a freckle my mad as a middy. Trent from punchy maccas no dramas shazza got us some ripper. As dry as a bradman flamin lets throw a cut lunch commando.</p>
+            <p><a href="{{ 'samples/contact'|page }}" class="btn btn-lg btn-primary">Contact Us</a></p>
+        </div>
+        <div class="col-sm-5">
+            <h4 class="headline"><span>Video intro</span></h4>
+            <div class="video-container">
+                <iframe src="//player.vimeo.com/video/67449472?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="row our-team">
+        <div class="col-sm-12">
+            <h4 class="headline"><span>Our team</span></h4>
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/aleksey.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Founder</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/sam.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/aleksey.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Sales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/sam.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Admin Team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>";s:7:"viewBag";a:0:{}s:8:"settings";a:9:{s:5:"title";s:5:"About";s:3:"url";s:6:"/about";s:6:"layout";s:7:"default";s:9:"is_hidden";s:1:"0";s:8:"child_of";s:13:"mey_no_parent";s:10:"hide_crumb";s:1:"0";s:18:"remove_crumb_trail";s:1:"0";s:14:"crumb_disabled";s:1:"0";s:10:"components";a:0:{}}s:4:"code";N;s:6:"markup";s:3306:"<section id="layout-title">
+    <div class="container">
+        <h3>Despre TextArt</h3>
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-7">
+            <h4 class="headline"><span>Welcome</span></h4>
+            <p>There's a voice that keeps on calling me. Down the road, that's where I'll always be. Every stop I make, I make a new friend. Can't stay for long, just turn around and I'm gone again. Maybe tomorrow, I'll want to settle down, Until tomorrow, I'll just keep moving on.</p>
+            <p>He hasn't got a freckle my mad as a middy. Trent from punchy maccas no dramas shazza got us some ripper. As dry as a bradman flamin lets throw a cut lunch commando.</p>
+            <p><a href="{{ 'samples/contact'|page }}" class="btn btn-lg btn-primary">Contact Us</a></p>
+        </div>
+        <div class="col-sm-5">
+            <h4 class="headline"><span>Video intro</span></h4>
+            <div class="video-container">
+                <iframe src="//player.vimeo.com/video/67449472?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="row our-team">
+        <div class="col-sm-12">
+            <h4 class="headline"><span>Our team</span></h4>
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/aleksey.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Founder</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/sam.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/aleksey.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Sales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="team-member text-center">
+                        <img class="img-responsive center-block" src="{{ 'assets/images/team/sam.png'|theme }}" alt="">
+                        <div class="info">
+                            John Doe
+                            <p class="text-muted">Admin Team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>";}";

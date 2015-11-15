@@ -1,0 +1,17 @@
+<form 
+	data-request="{{ __SELF__ }}::onAddItem"
+	data-request-success="$('#{{ __SELF__ }}_url').val('')"
+>
+	<div class="panel panel-default">
+		<div class="panel-heading">URL to monitor</div>
+	</div>
+	<div class="panel-body">
+		<div class="input-group">
+			<input name="url" type="text" id="{{ __SELF__ }}_url" class="form-control" value="" />
+
+			<span class="input-group-btn">
+				<button type="submit" class="btn btn-primary">Add</button>
+			</span>
+		</div>
+	</div>
+</form>

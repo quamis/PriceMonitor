@@ -1,0 +1,73 @@
+tabs:
+    fields:
+        form_width:
+            label: shahiemseymor.ckeditor::lang.settings.width
+            placeholder: 100%
+            default: 100%
+            type: text
+            tab: shahiemseymor.ckeditor::lang.settings.editor
+            span: left
+
+        form_height:
+            label: shahiemseymor.ckeditor::lang.settings.height
+            placeholder: 300px
+            default: 300px
+            type: text
+            tab: shahiemseymor.ckeditor::lang.settings.editor
+            span: right
+
+        toolbar:
+            label: shahiemseymor.ckeditor::lang.settings.toolbar
+            type: dropdown
+            options:
+                basic: shahiemseymor.ckeditor::lang.toolbar.basic
+                full: shahiemseymor.ckeditor::lang.toolbar.full
+            tab: shahiemseymor.ckeditor::lang.settings.editor
+            span: left
+
+        skin:
+            label: shahiemseymor.ckeditor::lang.settings.skin
+            type: dropdown
+            options:
+                moono: Moono
+                october: October
+            tab: shahiemseymor.ckeditor::lang.settings.editor
+            span: right
+
+        language:
+            label: shahiemseymor.ckeditor::lang.settings.language
+            type: dropdown
+            default: en
+            tab: shahiemseymor.ckeditor::lang.settings.editor
+
+        show_cms_content_as_wysiwyg:
+            label: shahiemseymor.ckeditor::lang.show.content
+            type: switch
+            tab: shahiemseymor.ckeditor::lang.plugins.tab
+            span: left
+            comment: shahiemseymor.ckeditor::lang.plugins.comment
+            default: false
+
+        show_cms_partial_as_wysiwyg:
+            label: shahiemseymor.ckeditor::lang.show.partials
+            type: switch
+            tab: shahiemseymor.ckeditor::lang.plugins.tab
+            span: right
+            comment: shahiemseymor.ckeditor::lang.plugins.comment
+            default: false
+
+        show_cms_layouts_as_wysiwyg:
+            label: shahiemseymor.ckeditor::lang.show.layouts
+            type: switch
+            tab: shahiemseymor.ckeditor::lang.plugins.tab
+            span: left
+            comment: shahiemseymor.ckeditor::lang.plugins.comment
+            default: false
+
+        show_cms_pages_as_wysiwyg:
+            label: shahiemseymor.ckeditor::lang.show.pages
+            type: switch
+            tab: shahiemseymor.ckeditor::lang.plugins.tab
+            span: right
+            comment: shahiemseymor.ckeditor::lang.plugins.comment
+            default: false

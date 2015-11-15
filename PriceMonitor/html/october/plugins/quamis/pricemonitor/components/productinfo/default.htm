@@ -1,0 +1,14 @@
+{% if __SELF__.property('showTitle') %}
+	{{ __SELF__.product.lastLog().name }}, on <a href="{{ __SELF__.product.url }}">{{ __SELF__.product.spider }}</a>
+{% endif %}
+
+{% if __SELF__.property('showPrice') %}
+	<div class="
+		{% if __SELF__.product.lastLog().price==__SELF__.product.minPrice() %}
+			pricemonitor_minPrice
+		{% elseif __SELF__.product.lastLog().price==__SELF__.product.maxPrice() %}
+			pricemonitor_maxPrice
+		{% endif %}
+	">{{ __SELF__.product.lastLog().price|number_format(2, '.', ',') }} {{ __SELF__.product.lastLog().currency }}</div>
+{% endif %}
+

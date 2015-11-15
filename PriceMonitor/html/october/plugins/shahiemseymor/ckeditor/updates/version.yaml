@@ -1,0 +1,17 @@
+1.0.1: First version
+1.0.2: New skin (Thanks Flynsarmy)
+1.0.3: Add setting to automatically apply to cms (Thanks Flynsarmy)
+1.0.4: Added file browser (Upload care), Added setting field for public key
+1.0.5: Error fixed by content and added skin.js file
+1.0.6: Added filebrowser (see documentation), Added new setting option for content entries, code cleanup
+1.0.7: Deleted Uploadcare plugin, changed settings page (skin, editor width and height, toolbar), added save hotkey
+1.0.8: Bug fixed, added editor language support
+1.0.9: Added Youtube plugin, Added ProEvents, ProBlog and Rainlab Static Pages to the settings page, CKeditor updated, code cleanup
+1.0.10: Code cleanup, added thank you message, security fix elfinder
+1.0.11: Update for RC
+1.0.12: Update for RC(2)
+1.0.13: Added component for Editable plugin. See documentation
+1.0.14: Elfinder is replaced for OctoberCMS Media Manger. (Only images for now)
+1.0.15: Multilanguage support (Backend). Added dutch language
+1.0.16: Editor bug fix
+1.0.17: Render bug fix

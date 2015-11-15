@@ -1,0 +1,47 @@
+/**
+ * base: 	http://paletton.com/#uid=c3y0O2D0d0kfsib8-rHcEmBk5eOoSba
+ * lighter: http://paletton.com/#uid=c3y0O2D0d0kl1Wx1x+IcEXDsUWkWEVB
+ * darker: 	http://paletton.com/#uid=c3y0O2D0d0kt+lZlOstrKqzzSiaJidt
+ */
+div.pricemonitor_history {
+}
+div.pricemonitor_details {
+}
+
+
+div.pricemonitor_minPrice {
+	color: #5A7F42;
+}
+div.pricemonitor_maxPrice {
+	color: #915D4B;
+}
+
+div.pricemonitor_product_old {
+	color: #D44B1C;
+}
+div.pricemonitor_product_current {
+	color: #327F00;
+}
+
+.col-price {
+	white-space: nowrap;
+}
+.col-pricePerUM {
+	white-space: nowrap;
+	font-size: 0.8em;
+	color: #888;
+}
+
+div.row.pricemonitor_list {
+	padding-right: 2px;
+	border-right: 4px solid #FFFFFF;
+}
+div.row.pricemonitor_list.pricemonitor_list_priceMin {
+	border-right: 4px solid #71FA18;
+}
+div.row.pricemonitor_list.pricemonitor_list_priceMin.pricemonitor_list_priceMax {
+	border-right: 4px solid #71FA18;
+}
+div.row.pricemonitor_list.pricemonitor_list_priceMax {
+	border-right: 4px solid #FFA619;
+}

@@ -1,0 +1,107 @@
+description = "Default layout"
+==
+<!DOCTYPE html>
+<html lang="en">
+    {% partial "meta" %}
+
+
+<body id="home" class="homepage">
+
+<header id="header">
+    {% partial "nav" %}
+</header><!--/header-->
+
+<section id="main-slider">
+    {% partial "slides" %}
+</section><!--/#main-slider-->
+    
+<section id="cta" class="wow fadeIn">
+    <div class="container">
+        <div class="row">
+            {% content 'cta.htm' %}
+        </div>
+    </div>
+</section><!--/#cta-->
+
+<section id="features">
+    {% partial "features" %}
+</section><!--/#features-->
+
+<section id="cta2">
+    <div class="container">
+        <div class="text-center">
+            {% partial "cta2" %}
+        </div>
+    </div>
+</section>
+
+<section id="services" >
+    {% partial "services" %}
+</section><!--/#services-->
+
+<section id="portfolio">
+    {% partial "portfolio" %}
+</section><!--/#portfolio-->
+
+<section id="about">
+    {% partial "about" %}
+</section><!--/#about-->
+
+<section id="work-process">
+    <div class="container">
+        {% content 'process.htm' %}
+    </div>
+</section><!--/#work-process-->
+
+<section id="meet-team">
+    {% partial "team" %}
+</section><!--/#meet-team-->
+
+<section id="animated-number">
+    {% content 'facts.htm' %}
+</section><!--/#animated-number-->
+
+<section id="pricing">
+    {% partial "pricing" %}
+</section><!--/#pricing-->
+
+<section id="testimonial">
+    {% partial "feedback" %}
+</section><!--/#testimonial-->
+
+<section id="blog">
+    {% partial "blogs" %}
+</section><!--/#blog-->
+
+<section id="get-in-touch">
+    <div class="container">
+        <div class="section-header">
+            {% content 'precontact.htm' %}
+        </div>
+    </div>
+</section><!--/#get-in-touch-->
+
+<section id="contact">
+    {% partial "contact" %}
+</section><!--/#contact-->
+
+<footer id="footer">
+    {% partial "footer" %}
+</footer><!--/#footer-->
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="{{ 'assets/js/jquery.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/bootstrap.min.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/owl.carousel.min.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/mousescroll.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/smoothscroll.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/jquery.prettyPhoto.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/jquery.isotope.min.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/jquery.inview.min.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/wow.min.js'|theme }}"></script>
+    <script type="text/javascript" src="{{ 'assets/js/main.js'|theme }}"></script>
+{% framework extras %}
+{% scripts %}
+
+</body>
+</html>

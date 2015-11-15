@@ -1,0 +1,64 @@
+<?php
+    $activeItem = BackendMenu::getActiveMainMenuItem();
+    $mySettings = System\Classes\SettingsManager::instance()->listItems('mysettings');
+?>
+<nav class="navbar control-toolbar" id="layout-mainmenu" role="navigation">
+    <div class="toolbar-item toolbar-primary">
+        <div data-control="toolbar">
+            <a class="menu-toggle" href="javascript:;">
+                <i class="icon-bars"></i>
+                <?= $activeItem ? e(trans($activeItem->label)) : 'CMS' ?>
+            </a>
+
+            <ul class="nav">
+                <?php foreach (BackendMenu::listMainMenuItems() as $item): ?>
+                    <li class="<?= BackendMenu::isMainMenuItemActive($item) ? 'active' : null ?>">
+                        <a href="<?= $item->url ?>">
+                            <i class="<?= $item->icon ?>"></i><?= e(trans($item->label)) ?>
+                        </a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+    <div class="toolbar-item" data-calculate-width>
+        <ul>
+            <li class="icon preview with-tooltip">
+                <a
+                    href="<?= URL::to('/') ?>"
+                    target="_blank"
+                    title="<?= e(trans('backend::lang.tooltips.preview_website')) ?>">
+                    <i class="icon-crosshairs"></i>
+                </a>
+            </li>
+            <li class="highlight account">
+                <a href="javascript:;" onclick="$.oc.layout.toggleAccountMenu(this)">
+                    <img src="<?= $this->user->getAvatarThumb(50, ['extension' => 'png']) ?>">
+                    <span class="hidden-xs">
+                        <?= e($this->user->first_name.' '.$this->user->last_name) ?>
+                    </span>
+                </a>
+                <div class="mainmenu-accountmenu">
+                    <ul>
+                        <?php foreach ($mySettings as $category => $items): ?>
+                            <?php foreach ($items as $item): ?>
+                                <li>
+                                    <a href="<?= $item->url ?>">
+                                        <?= e(trans($item->label)) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach ?>
+                            <li class="divider"></li>
+                        <?php endforeach ?>
+
+                        <li>
+                            <a href="<?= Backend::url('backend/auth/signout') ?>">
+                                <?= e(trans('backend::lang.account.sign_out')) ?>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

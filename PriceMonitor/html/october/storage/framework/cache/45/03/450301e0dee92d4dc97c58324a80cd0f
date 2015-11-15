@@ -1,0 +1,23 @@
+1447567745s:841:"a:2:{s:5:"mtime";i:1446551987;s:7:"content";s:787:"<div class="pricemonitor_history">
+	{% set lastLog = null %}
+	{% for log in __SELF__.product.getLogs() %}
+		{% set diff = 0 %}
+		{% if lastLog %}
+			{% set diff = (log.price - lastLog.price) %}
+		{% endif %}
+
+		<div class="row {% if lastLog %}{% if diff>0 %}pricemonitor_minPrice{% else %}pricemonitor_maxPrice{% endif %}{% endif %}">
+			<div class="col-md-6">{{ log.updated_at|date("M,d H:i") }}</div>
+			<div class="col-md-3 text-right text-nowrap">{{ log.price|number_format(2, '.', ',') }}</div>
+			<div class="col-md-3 text-right hidden-sm"><small><em>
+				{% if lastLog %}
+					{% if diff>0 %}+{% endif %}
+					{% if diff<0 %}-{% endif %}
+					{{ diff|abs|number_format(1, '.', ',') }}
+				{% endif %}
+			</em></small></div>
+		</div>
+		{% set lastLog = log %}
+	{% endfor %}
+</div>
+";}";

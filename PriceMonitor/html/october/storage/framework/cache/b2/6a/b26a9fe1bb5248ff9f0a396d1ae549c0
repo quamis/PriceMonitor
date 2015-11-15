@@ -1,0 +1,26 @@
+1447567745s:1131:"a:2:{s:5:"mtime";i:1446551627;s:7:"content";s:1076:"<div class="pricemonitor_details">
+	<div class="row
+		{% if date(__SELF__.product.lastLog().updated_at) > date('-12hours') %}
+			pricemonitor_product_current 
+		{% elseif date(__SELF__.product.lastLog().updated_at) < date('-2days') %}
+			pricemonitor_product_old
+		{% endif %}
+	">
+		<div class="col-md-6">Last seen</div>
+		<div class="col-md-6 text-right ">{{ __SELF__.product.lastLog().updated_at|date("M,d H:i") }}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">First seen</div>
+		<div class="col-md-6 text-right">{{ __SELF__.product.firstLog().created_at|date("M,d H:i") }}</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">Price min</div>
+		<div class="col-md-6 text-right pricemonitor_minPrice">{{ __SELF__.product.minPrice()|number_format(2, '.', ',') }} {{ __SELF__.product.lastLog().currency }}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">Price max</div>
+		<div class="col-md-6 text-right pricemonitor_maxPrice">{{ __SELF__.product.maxPrice()|number_format(2, '.', ',') }} {{ __SELF__.product.lastLog().currency }}</div>
+	</div>
+</div>
+";}";

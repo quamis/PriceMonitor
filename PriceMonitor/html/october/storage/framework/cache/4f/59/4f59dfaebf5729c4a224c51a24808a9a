@@ -1,0 +1,27 @@
+1447568612s:1501:"a:2:{s:5:"mtime";i:1447566486;s:7:"content";s:1446:"{% for product in __SELF__.products %}
+	{% set mark=__SELF__.markedElements[product.id] %}
+	<div class="row 
+		pricemonitor_list
+		{% if mark.priceMin %}pricemonitor_list_priceMin{% endif %} 
+		{% if mark.priceMax %}pricemonitor_list_priceMax{% endif %}
+	">
+		<a href="{{ 'history'|page({ id:product.id }) }}"><div class="col-md-8">{{ product.lastLog().name }}</div></a>
+		<div class="col-md-1">{{ product.spider }}</div>
+		<div class="col-md-2 text-right col-price">
+			{% if product.minPrice()==product.lastLog().price %}
+				<div class="pricemonitor_minPrice">{{ product.lastLog().price|number_format(2, '.', ',') }} {{ product.lastLog().currency }}</div>
+			{% elseif product.maxPrice()==product.lastLog().price %}
+				<div class="pricemonitor_maxPrice">{{ product.lastLog().price|number_format(2, '.', ',') }} {{ product.lastLog().currency }}</div>
+			{% else %}
+				<div>{{ product.lastLog().price|number_format(2, '.', ',') }} {{ product.lastLog().currency }}</div>
+			{% endif %}
+		</div>
+		<div class="col-xl-1 text-right col-pricePerUM">
+			{% if product.lastLog().price and product.productAttributes().quantity and product.productAttributes().quantity.value %}
+				{% set pricePerUM = (product.lastLog().price/product.productAttributes().quantity.value) %}
+				{{ pricePerUM|number_format(2, '.', ',') }} {{ product.lastLog().currency }}/{{ product.productAttributes().quantity_UM.value }}
+			{% endif %}
+		</div>
+	</div>
+{% endfor %}
+";}";

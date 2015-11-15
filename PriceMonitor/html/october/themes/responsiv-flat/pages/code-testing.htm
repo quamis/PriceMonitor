@@ -1,0 +1,36 @@
+title = "Home"
+url = "/"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[ProductAdd]
+
+[ProductCategories]
+orderBy = "name"
+==
+<section class="home-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <!--<h3>Monitoring websites for price changes</h3>
+                <p>You have a product that needs monitoring? Give it to us and we'll notify you when the price drops.</p>
+                -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    {% component 'ProductAdd' %}
+    <div class="panel panel-default">
+        	<div class="panel-heading">Categories</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductCategories' %}
+        </div>
+    </div>
+</div>

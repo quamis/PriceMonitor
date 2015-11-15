@@ -1,0 +1,35 @@
+1447568341s:1554:"a:6:{s:5:"mtime";i:1446103114;s:7:"content";s:689:"title = "Page not found (404)"
+url = "/404"
+layout = "default"
+==
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2 text-center">
+                <br />
+                <img src="{{ 'assets/images/icons/svg/compas.svg'|theme }}" alt="">
+            </div>
+            <div class="col-xs-10">
+                <h1>You appear to be lost...</h1>
+                <p>We're very sorry, but the page you requested <em>cannot be found</em> here.</p>
+                <p>Try returning to where you started with this compass.</p>
+                <p><small><em>Error code: 404</em></small>
+            </div>
+        </div>
+    </div>
+</div>";s:7:"viewBag";a:0:{}s:8:"settings";a:4:{s:5:"title";s:20:"Page not found (404)";s:3:"url";s:4:"/404";s:6:"layout";s:7:"default";s:10:"components";a:0:{}}s:4:"code";N;s:6:"markup";s:623:"<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2 text-center">
+                <br />
+                <img src="{{ 'assets/images/icons/svg/compas.svg'|theme }}" alt="">
+            </div>
+            <div class="col-xs-10">
+                <h1>You appear to be lost...</h1>
+                <p>We're very sorry, but the page you requested <em>cannot be found</em> here.</p>
+                <p>Try returning to where you started with this compass.</p>
+                <p><small><em>Error code: 404</em></small>
+            </div>
+        </div>
+    </div>
+</div>";}";

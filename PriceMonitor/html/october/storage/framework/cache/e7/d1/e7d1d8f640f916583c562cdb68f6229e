@@ -1,0 +1,24 @@
+1447567745s:1117:"a:2:{s:5:"mtime";i:1446551358;s:7:"content";s:1062:"<form 
+	data-request="{{ __SELF__ }}::onSave"
+>
+		<div class="form-group">
+			<div class="input-group">
+				<input name="category" placeholder="category" class="form-control" type="text" id="{{ __SELF__ }}_category" value="{{ __SELF__.product.productAttributes().category.value }}" />
+				<div class="input-group-addon">Category</div>
+			</div>
+		</div>
+		<div class="form-group">	
+			<div class="input-group">
+				<input name="quantity" placeholder="123456.789" class="form-control" type="text" id="{{ __SELF__ }}_quantity" value="{{ __SELF__.product.productAttributes().quantity.value }}" />
+				<div class="input-group-addon">Quantity</div>
+			</div>
+		</div>
+	
+		<div class="form-group">
+			<div class="input-group">
+				<input name="quantity_UM" placeholder="pcs, GB, cm" class="form-control" type="text" id="{{ __SELF__ }}_quantity" value="{{ __SELF__.product.productAttributes().quantity_UM.value }}" />
+				<div class="input-group-addon">Quantity UM</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary btn-block">Save</button>
+</form>";}";
