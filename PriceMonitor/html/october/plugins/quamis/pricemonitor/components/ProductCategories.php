@@ -26,6 +26,14 @@ class ProductCategories extends ComponentBase
                 'validationPattern' => '^.+$',
                 'validationMessage' => 'This should be a valid spider from the database'
             ],
+			'section' => [
+                'description'       => 'Category',
+                'title'             => 'section',
+                'default'           => 'category',
+                'type'              => 'string',
+                'validationPattern' => '^.+$',
+                'validationMessage' => 'This should be a valid value'
+            ],
             'orderBy' => [
                 'description'       => 'Order algorithm',
                 'title'             => 'orderBy',

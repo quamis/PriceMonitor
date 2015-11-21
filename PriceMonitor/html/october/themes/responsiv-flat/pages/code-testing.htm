@@ -10,6 +10,7 @@ crumb_disabled = 0
 [ProductAdd]
 
 [ProductCategories]
+section = "category"
 orderBy = "name"
 ==
 <section class="home-title">
@@ -19,6 +20,9 @@ orderBy = "name"
                 <!--<h3>Monitoring websites for price changes</h3>
                 <p>You have a product that needs monitoring? Give it to us and we'll notify you when the price drops.</p>
                 -->
+                <div class="row">
+	<a href="{{ ("/%s/%s"|format('offers', ''))|app }}"><div class="col-xl-12">offers</div></a>
+</div>
             </div>
         </div>
     </div>

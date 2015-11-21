@@ -43,6 +43,14 @@ class ProductList extends ComponentBase
                 'validationPattern' => '^(0|1)$',
                 'validationMessage' => 'This should be a bool value'
             ],
+			'showOnlyWithPrice' => [
+                'description'       => 'Show only products with price min/max',
+                'title'             => 'showOnlyWithPrice',
+                'default'           => '',
+                'type'              => 'string',
+                'validationPattern' => '^(min|max|)(:[0-9]+%)$',
+                'validationMessage' => 'This should be a valid value(blank, min, max)'
+            ],
 			'orderBy' => [
                 'description'       => 'Order algorithm',
                 'title'             => 'orderBy',
@@ -110,10 +118,44 @@ class ProductList extends ComponentBase
 			});
 		}
 		
+		if ($this->property('showOnlyWithPrice')) {
+			$filter = $this->property('showOnlyWithPrice');
+			if ($filter=='slug:showOnlyWithPrice') {
+				$filter = $this->param('showOnlyWithPrice');
+			}
+			$products = $products->filter(function($product) use ($filter) {
+				switch($filter) {
+					case 'min':
+						return $product->lastLog()->price == $product->minPrice();
+					break;
+					case 'max':
+						return $product->lastLog()->price == $product->maxPrice();
+					break;
+					
+					case 'min:10%':
+						$diff = $product->maxPrice() - $product->minPrice();
+						return $product->lastLog()->price <= $product->minPrice()+$diff*0.10;
+					break;
+					case 'min:25%':
+						$diff = $product->maxPrice() - $product->minPrice();
+						return $product->lastLog()->price <= $product->minPrice()+$diff*0.25;
+					break;
+					case 'min:50%':
+						$diff = $product->maxPrice() - $product->minPrice();
+						return $product->lastLog()->price <= $product->minPrice()+$diff*0.50;
+					break;
+					
+					default: 
+						throw new \Exception("Invalid value for showOnlyWithPrice");
+				}
+			});
+		}
+		
 		$orderBy = $this->property('orderBy');
 		if ($orderBy=='slug:orderBy') {
 			$orderBy = $this->param('orderBy');
 		}
+		
 		switch($orderBy) {
 			case 'name':
 				$products = $products->sort(function($p1, $p2) {
@@ -138,10 +180,56 @@ class ProductList extends ComponentBase
 			
 			case 'pricePerUnit':
 				$products = $products->sort(function($p1, $p2) {
-					if($p1->productAttributes() && $p1->productAttributes()['quantity']) {
-						return $p1->lastLog()->price/(float)$p1->productAttributes()['quantity']->value - $p2->lastLog()->price/(float)$p2->productAttributes()['quantity']->value;
+					$ret = 0;
+					if ($ret==0
+						&& $p1->productAttributes() && isset($p1->productAttributes()['quantity']) && $p1->productAttributes()['quantity']->value
+						&& $p2->productAttributes() && isset($p2->productAttributes()['quantity']) && $p2->productAttributes()['quantity']->value
+						&& $p1->lastLog()->price
+						&& $p2->lastLog()->price
+						) {
+							$pu1 = (float)$p1->lastLog()->price / (float)$p1->productAttributes()['quantity']->value;
+							$pu2 = (float)$p2->lastLog()->price / (float)$p2->productAttributes()['quantity']->value;
+						return ($pu1 - $pu2)*100;	// usort should return integer numbers, so that 1.99 != 1.01
 					}
-					return 0;
+					
+					if ($ret==0) {
+						if ($p1->lastLog() && $p2->lastLog()) {
+							$ret = $p1->lastLog()->price - $p2->lastLog()->price;
+						}
+					}
+					
+					return $ret;
+				});
+			break;
+			
+			case 'category,pricePerUnit':
+				$products = $products->sort(function($p1, $p2) {
+					$ret = 0;
+					if ($ret==0) {
+						if ( $p1->productAttributes() && $p1->productAttributes()['category'] && $p1->productAttributes()['category']->value
+						  && $p2->productAttributes() && $p2->productAttributes()['category'] && $p2->productAttributes()['category']->value) {
+							$ret = strcmp($p1->productAttributes()['category']->value, $p2->productAttributes()['category']->value);
+						}
+					}
+					
+					if ($ret==0
+						&& $p1->productAttributes() && isset($p1->productAttributes()['quantity']) && $p1->productAttributes()['quantity']->value
+						&& $p2->productAttributes() && isset($p2->productAttributes()['quantity']) && $p2->productAttributes()['quantity']->value
+						&& $p1->lastLog()->price
+						&& $p2->lastLog()->price
+						) {
+							$pu1 = (float)$p1->lastLog()->price / (float)$p1->productAttributes()['quantity']->value;
+							$pu2 = (float)$p2->lastLog()->price / (float)$p2->productAttributes()['quantity']->value;
+						return ($pu1 - $pu2)*100;	// usort should return integer numbers, so that 1.99 != 1.01
+					}
+					
+					if ($ret==0) {
+						if ($p1->lastLog() && $p2->lastLog()) {
+							$ret = $p1->lastLog()->price - $p2->lastLog()->price;
+						}
+					}
+					
+					return $ret;
 				});
 			break;
 			

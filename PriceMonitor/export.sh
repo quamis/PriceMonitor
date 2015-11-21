@@ -30,7 +30,7 @@ M=`date "+%M"|sed s/^0//`
 M=`printf "%02d" $(( (M/5)*5 ))`
 TIME=`date "+%Y%m%d-%H${M}00"`
 
-SPIDERS=("emag.ro" "pcgarage.ro" "mediagalaxy.ro" "flanco.ro" "coradrive.ro" "azerty.ro" "cel.ro" "noriel.ro" "promomix.ro" "mediadot.ro")
+SPIDERS=("emag.ro" "pcgarage.ro" "mediagalaxy.ro" "flanco.ro" "coradrive.ro" "azerty.ro" "cel.ro" "noriel.ro" "promomix.ro" "mediadot.ro" "babymar.ro" "bebebliss.ro" "carucioaredecopii.ro" "oktal.ro")
 
 update_type="$1"
 : ${update_type:="all"}

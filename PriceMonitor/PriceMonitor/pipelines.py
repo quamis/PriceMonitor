@@ -91,7 +91,8 @@ class StoragePipeline(object):
                 #    )
                 #else:
                 if value is not None:
-                    self.cursor.execute("""REPLACE INTO `quamis_pricemonitor_product_attributes` (`id`, `key`, `value`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s)""", 
+                    #self.cursor.execute("""REPLACE INTO `quamis_pricemonitor_product_attributes` (`id`, `key`, `value`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s)""", 
+                    self.cursor.execute("""INSERT IGNORE INTO `quamis_pricemonitor_product_attributes` (`id`, `key`, `value`, `created_at`, `updated_at` ) VALUES (%s, %s, %s, %s, %s)""", 
                         (
                             ("%s.%s"%(item['id'], key)).encode('utf-8'), 
                             key.encode('utf-8'),

@@ -1,0 +1,84 @@
+title = "Offers"
+url = "/offers"
+layout = "default"
+is_hidden = 0
+child_of = "code-testing"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[breadcrumbs]
+main-ol-class = "breadcrumb"
+active-class = "active"
+disabled-class = "disabled"
+
+[ProductList]
+category = "hdd:ssd"
+active = 1
+showOnlyWithPrice = "min:10%"
+orderBy = "category,pricePerUnit"
+
+[ProductList ProductList2]
+category = "pampers"
+active = 1
+showOnlyWithPrice = "min:10%"
+orderBy = "category,pricePerUnit"
+
+[ProductList ProductList3]
+category = "phone"
+active = 1
+showOnlyWithPrice = "min:10%"
+orderBy = "category,pricePerUnit"
+
+[ProductList ProductList4]
+category = "car:babyCarSeat"
+active = 1
+showOnlyWithPrice = "min:10%"
+orderBy = "category,pricePerUnit"
+==
+{% component 'breadcrumbs' %}
+
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">hdd:ssd</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductList' %}
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">pampers</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductList2' %}
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">phone</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductList3' %}
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">car:babyCarSeat</div>
+        </div>
+        <div class="panel-body">
+            {% component 'ProductList4' %}
+        </div>
+    </div>
+</div>
+<br/>

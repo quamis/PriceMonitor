@@ -179,9 +179,9 @@ class BaseSpider(BaseSpider):
         if m:
             pcs = int(m.group('pcs'))
             
-            if m.group('pcs').upper()=='TB':
+            if m.group('UM').upper()=='TB':
                 ret = pcs*1000
-            if m.group('pcs').upper()=='GB':
+            if m.group('UM').upper()=='GB':
                 ret = pcs
         
         return ret
@@ -191,6 +191,14 @@ class BaseSpider(BaseSpider):
         m = re.search("(?P<pcs>[0-9]+)[\s]*cm", name, re.IGNORECASE)
         if m:
             ret = int(m.group('pcs'))
+        
+        m = re.search("LED (?P<pcs>(32|31|30))[\s]", name, re.IGNORECASE)
+        if m:
+            ret = int(round(int(m.group('pcs'))*2.54))
+            
+        m = re.search("[\s](?P<pcs>(32|31|30))[\s]", name, re.IGNORECASE)
+        if m:
+            ret = int(round(int(m.group('pcs'))*2.54))
         
         return ret
         
@@ -206,3 +214,4 @@ class BaseSpider(BaseSpider):
             return float(text)
             
         raise Exception("Invalid rule")
+        
